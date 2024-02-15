@@ -1,4 +1,4 @@
-# GitHub API - Repositories and Branches by User's Login
+# GitHub API - Repositories and Branches by User's Login 
 
 ## Description
 
@@ -18,11 +18,11 @@ Open the project in your preferred IDE (e.g., IntelliJ IDEA, Eclipse) and run th
 
 Once the application is running, you can access the API using the URLs specified below:
 
-#### The API is divided into 2 endpoints:
+## The API is divided into 2 endpoints:
 
 ### Endpoint 1: JSON Format Data
 
-- URL: `http://localhost:8080/json/{login}`
+**URL**: `http://localhost:8080/json/{login}`
 
 Replace `{login}` with the GitHub username you want to search for.
 
@@ -50,7 +50,7 @@ It's also possible that your token may expire or you do not have a token. In tho
 
 ### Endpoint 2: HTML Format Data
 
-- URL: `http://localhost:8080/{login}`
+**URL**: `http://localhost:8080/{login}`
 
 Replace `{login}` with the GitHub username you want to search for.
 
