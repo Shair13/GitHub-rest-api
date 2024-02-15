@@ -28,6 +28,8 @@ public class GitClient {
             return restTemplate.getForObject(GIT_API_URL + url, responseType, objects);
         } catch (HttpClientErrorException e) {
             throw new GitHubApiRemoteException("No user found with this login");
+        } catch (RuntimeException e){
+            throw new GitHubApiRemoteException("Error while reaching external GitHub API");
         }
     }
 }

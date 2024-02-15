@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,37 +24,33 @@ public class GitService {
 
         List<RepoDto> reposDto = notForkedRepos(gitClient.getReposForUser(login));
 
-        List<Repo> repoList = new ArrayList<>();
+        List<Repo> repoList;
 
-        reposDto.forEach(repoDto -> {
-            repoList.add(Repo.builder()
-                    .userName(repoDto.getOwner().getLogin())
-                    .repoName(repoDto.getName())
-                    .build());
-        });
+        repoList = reposDto.stream()
+                .map(repoDto -> Repo.builder()
+                        .userName(repoDto.getOwner().getLogin())
+                        .repoName(repoDto.getName())
+                        .build())
+                .collect(Collectors.toList());
 
-        for (Repo repo : repoList) {
+        repoList.forEach(repo -> {
             BranchDto[] branchesDto = gitClient.getBranchesForRepo(repo.getUserName(), repo.getRepoName());
-            List<Branch> branches = new ArrayList<>();
-            Arrays.stream(branchesDto).forEach(branchDto -> {
-                Branch branch = new Branch();
-                branch.setBranchName(branchDto.getName());
-                branch.setSha(branchDto.getCommit().getSha());
-                branches.add(branch);
-            });
+            List<Branch> branches = Arrays.stream(branchesDto)
+                    .map(branchDto -> Branch.builder()
+                            .branchName(branchDto.getName())
+                            .sha(branchDto.getCommit().getSha())
+                            .build())
+                    .collect(Collectors.toList());
             repo.setBranches(branches);
-        }
+
+        });
         return repoList;
     }
 
     private List<RepoDto> notForkedRepos(RepoDto[] reposDto) {
 
-        List<RepoDto> ownReposList = new ArrayList<>();
-        for (RepoDto repoDto : reposDto) {
-            if (!repoDto.isFork()) {
-                ownReposList.add(repoDto);
-            }
-        }
-        return ownReposList;
+        return Arrays.stream(reposDto)
+                .filter(repoDto -> !repoDto.isFork())
+                .collect(Collectors.toList());
     }
 }

@@ -1,22 +1,20 @@
 package com.example.githubrestapi.controller;
 
+import com.example.githubrestapi.model.Repo;
 import com.example.githubrestapi.service.GitService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
 
-@Controller
-@RequiredArgsConstructor
+@AllArgsConstructor
+@RestController
 public class RepoJsonController {
 
     private final GitService gitService;
 
-    @GetMapping("/{login}")
-    public String displayGit(@PathVariable String login, Model model) {
-        model.addAttribute("repos", gitService.getUserRepositories(login));
-        return "display-repos";
+    @GetMapping("/json/{login}")
+    public List<Repo> displayGit(@PathVariable String login) {
+        return gitService.getUserRepositories(login);
     }
 }
