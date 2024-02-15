@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:each="repo : ${repos}">
+    <h2 th:text="${repo.getRepoName()}"></h2>
+    <h3 th:text="${repo.getUserName()}"></h3>
+    <p th:each="branch : ${repo.getBranches()}" th:text="${branch.getBranchName() + ' : ' + branch.getSha()}"></p>
+    <br>
+</div>
+</body>
+</html>
