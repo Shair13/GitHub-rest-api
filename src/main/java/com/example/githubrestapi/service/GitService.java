@@ -25,12 +25,12 @@ public class GitService {
 
         List<Repo> repoList = new ArrayList<>();
 
-        for (RepoDto repo : reposDto) {
+        reposDto.forEach(repoDto -> {
             repoList.add(Repo.builder()
-                    .userName(repo.getOwner().getLogin())
-                    .repoName(repo.getName())
+                    .userName(repoDto.getOwner().getLogin())
+                    .repoName(repoDto.getName())
                     .build());
-        }
+        });
 
         for (Repo repo : repoList) {
             BranchDto[] branchesDto = gitClient.getBranchesForRepo(repo.getUserName(), repo.getRepoName());
@@ -43,7 +43,6 @@ public class GitService {
             });
             repo.setBranches(branches);
         }
-
         return repoList;
     }
 
