@@ -5,6 +5,8 @@ import com.example.githubrestapi.service.GitService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 public class RepoController {
@@ -12,7 +14,7 @@ public class RepoController {
     private final GitService gitService;
 
     @GetMapping("/json/{login}")
-    public Repo[] displayGit(@PathVariable String login) {
+    public List<Repo> displayGit(@PathVariable String login) {
         return gitService.getUserRepositories(login);
     }
 }
