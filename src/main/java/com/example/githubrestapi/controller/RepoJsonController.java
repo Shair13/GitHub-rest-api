@@ -16,7 +16,6 @@ public class RepoJsonController {
 
     @GetMapping(path = "/json/{login}", headers = {"Accept=application/json"})
     public List<Repo> displayGit(@PathVariable String login, @RequestHeader("Accept") String acceptHeader) {
-        System.out.println(acceptHeader);
         if(!acceptHeader.equals("application/json")) {
            throw new MissingAcceptHeaderException("Missing or invalid Accept header");
         }
