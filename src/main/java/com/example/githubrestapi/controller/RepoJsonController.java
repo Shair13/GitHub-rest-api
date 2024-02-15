@@ -2,12 +2,12 @@ package com.example.githubrestapi.controller;
 
 import com.example.githubrestapi.model.Repo;
 import com.example.githubrestapi.service.GitService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 public class RepoJsonController {
 

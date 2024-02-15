@@ -8,7 +8,6 @@ import com.example.githubrestapi.webclient.gitclient.GitClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,8 +41,8 @@ public class GitService {
                             .build())
                     .collect(Collectors.toList());
             repo.setBranches(branches);
-
         });
+
         return repoList;
     }
 
