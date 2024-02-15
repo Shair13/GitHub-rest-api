@@ -21,7 +21,7 @@ public class GitService {
 
     public List<Repo> getUserRepositories(String login) {
 
-        RepoDto[] reposDto = notForkedRepos(gitClient.getReposForUser(login));
+        List<RepoDto> reposDto = notForkedRepos(gitClient.getReposForUser(login));
 
         List<Repo> repoList = new ArrayList<>();
 
@@ -47,14 +47,14 @@ public class GitService {
         return repoList;
     }
 
-    private RepoDto[] notForkedRepos(RepoDto[] reposDto) {
-        
+    private List<RepoDto> notForkedRepos(RepoDto[] reposDto) {
+
         List<RepoDto> ownReposList = new ArrayList<>();
         for (RepoDto repoDto : reposDto) {
             if (!repoDto.isFork()) {
                 ownReposList.add(repoDto);
             }
         }
-        return ownReposList.toArray(new RepoDto[0]);
+        return ownReposList;
     }
 }
