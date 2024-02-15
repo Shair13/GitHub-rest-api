@@ -4,4 +4,6 @@ public class GitHubApiRemoteException extends RuntimeException  {
     public GitHubApiRemoteException(String message){
         super(message);
     }
+
+
 }

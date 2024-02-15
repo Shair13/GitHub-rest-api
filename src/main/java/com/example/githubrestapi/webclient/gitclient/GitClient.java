@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class GitClient {
 
     private static final String GIT_API_URL = "https://api.github.com/";
-    private static final String TOKEN = "YourGitHubToken";
+    private static final String TOKEN = "YourToken";
     private final RestTemplate restTemplate = new RestTemplate();
 
     public RepoDto[] getReposForUser(String user) {
@@ -27,14 +27,13 @@ public class GitClient {
     private <T> T fetchData(String url, Class<T> responseType, Object... objects) {
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Accept", "application/json");
             httpHeaders.set("Authorization", TOKEN);
             HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
             ResponseEntity<T> response = restTemplate.exchange(GIT_API_URL + url, HttpMethod.GET, entity, responseType, objects);
             return response.getBody();
-        } catch (HttpClientErrorException e) {
+        } catch (HttpClientErrorException.NotFound e) {
             throw new GitHubApiRemoteException("No user found with this login");
-        } catch (RuntimeException e) {
+        } catch (HttpClientErrorException.Forbidden e) {
             throw new GitHubApiRemoteException("Error while reaching external GitHub API");
         }
     }

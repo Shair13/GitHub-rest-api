@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class GitService {
@@ -30,7 +28,7 @@ public class GitService {
                         .userName(repoDto.getOwner().getLogin())
                         .repoName(repoDto.getName())
                         .build())
-                .collect(Collectors.toList());
+                .toList();
 
         repoList.forEach(repo -> {
             BranchDto[] branchesDto = gitClient.getBranchesForRepo(repo.getUserName(), repo.getRepoName());
@@ -39,7 +37,7 @@ public class GitService {
                             .branchName(branchDto.getName())
                             .sha(branchDto.getCommit().getSha())
                             .build())
-                    .collect(Collectors.toList());
+                    .toList();
             repo.setBranches(branches);
         });
 
@@ -50,6 +48,6 @@ public class GitService {
 
         return Arrays.stream(reposDto)
                 .filter(repoDto -> !repoDto.isFork())
-                .collect(Collectors.toList());
+                .toList();
     }
 }
