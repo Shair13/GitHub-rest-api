@@ -1,7 +1,7 @@
 package com.example.githubrestapi.exception;
 
-public class GitHubApiUserNotFoundException extends RuntimeException  {
-    public GitHubApiUserNotFoundException(String message){
+public class GitHubApiRemoteException extends RuntimeException  {
+    public GitHubApiRemoteException(String message){
         super(message);
     }
 }

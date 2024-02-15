@@ -1,7 +1,7 @@
 package com.example.githubrestapi.webclient.gitclient;
 
 
-import com.example.githubrestapi.exception.GitHubApiUserNotFoundException;
+import com.example.githubrestapi.exception.GitHubApiRemoteException;
 import com.example.githubrestapi.webclient.dto.BranchDto;
 import com.example.githubrestapi.webclient.dto.RepoDto;
 import org.springframework.stereotype.Component;
@@ -24,10 +24,10 @@ public class GitClient {
     }
 
     private <T> T fetchData(String url, Class<T> responseType, Object... objects) {
-        try{
+        try {
             return restTemplate.getForObject(GIT_API_URL + url, responseType, objects);
-        } catch (HttpClientErrorException e){
-            throw new GitHubApiUserNotFoundException("No user found with this login");
+        } catch (HttpClientErrorException e) {
+            throw new GitHubApiRemoteException("No user found with this login");
         }
     }
 }
