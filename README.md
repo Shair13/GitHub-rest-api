@@ -10,11 +10,17 @@ This Java application (built using Java 21 and Spring Boot 3) utilizes the GitHu
 
 Clone this repository to your local machine.
 
-### 2. Run the Application
+### 2. Clone Repository
+
+Set your GitHub token in the `github.api.token` field in the **application.properties** file.
+
+![token](images/token.png)
+
+### 3. Run the Application
 
 Open the project in your preferred IDE (e.g., IntelliJ IDEA, Eclipse) and run the application.
 
-### 3. Accessing the API
+### 4. Accessing the API
 
 Once the application is running, you can access the API using the URLs specified below:
 
