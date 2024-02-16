@@ -4,6 +4,7 @@ package com.example.githubrestapi.webclient.gitclient;
 import com.example.githubrestapi.exception.GitHubApiRemoteException;
 import com.example.githubrestapi.webclient.dto.BranchDto;
 import com.example.githubrestapi.webclient.dto.RepoDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -13,7 +14,9 @@ import org.springframework.web.client.RestTemplate;
 public class GitClient {
 
     private static final String GIT_API_URL = "https://api.github.com/";
-    private static final String TOKEN = "YourToken";
+
+    @Value("${github.api.token}")
+    private String TOKEN;
     private final RestTemplate restTemplate = new RestTemplate();
 
     public RepoDto[] getReposForUser(String user) {
