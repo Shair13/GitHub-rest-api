@@ -4,13 +4,12 @@ package com.example.githubrestapi.webclient.gitclient;
 import com.example.githubrestapi.exception.GitHubApiRemoteException;
 import com.example.githubrestapi.webclient.dto.BranchDto;
 import com.example.githubrestapi.webclient.dto.RepoDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -23,12 +22,12 @@ public class GitClient {
     private String TOKEN;
     RestClient restClient = RestClient.create();
 
-    public RepoDto[] getReposForUser(String user) {
-        return fetchData("users/{user}/repos", RepoDto[].class, user);
+    public List<RepoDto> getReposForUser(String user) {
+        return Arrays.stream(fetchData("users/{user}/repos", RepoDto[].class, user)).toList();
     }
 
-    public BranchDto[] getBranchesForRepo(String user, String repo) {
-        return fetchData("repos/{user}/{repo}/branches", BranchDto[].class, user, repo);
+    public List<BranchDto> getBranchesForRepo(String user, String repo) {
+        return Arrays.stream(fetchData("repos/{user}/{repo}/branches", BranchDto[].class, user, repo)).toList();
     }
 
     private <T> T fetchData(String url, Class<T> responseType, Object... uriVariables) {

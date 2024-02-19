@@ -6,8 +6,6 @@ import com.example.githubrestapi.webclient.dto.RepoDto;
 import com.example.githubrestapi.webclient.gitclient.GitClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -20,7 +18,7 @@ public class GitService {
 
         return notForkedRepos(gitClient.getReposForUser(login)).stream()
                 .map(repoDto -> {
-                    List<Branch> branchesList = Arrays.stream(gitClient.getBranchesForRepo(repoDto.owner().login(), repoDto.name()))
+                    List<Branch> branchesList = gitClient.getBranchesForRepo(repoDto.owner().login(), repoDto.name()).stream()
                             .map(branchDto -> new Branch(branchDto.name(), branchDto.commit().sha()))
                             .toList();
                    return new Repo(repoDto.name(), repoDto.owner().login(), branchesList);
@@ -28,9 +26,9 @@ public class GitService {
                 .toList();
     }
 
-    private List<RepoDto> notForkedRepos(RepoDto[] reposDto) {
+    private List<RepoDto> notForkedRepos(List<RepoDto> reposDto) {
 
-        return Arrays.stream(reposDto)
+        return reposDto.stream()
                 .filter(repoDto -> !repoDto.fork())
                 .toList();
     }
