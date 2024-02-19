@@ -1,11 +1,5 @@
 package com.example.githubrestapi.model;
 
-import lombok.Builder;
-import lombok.Getter;
+public record Branch(String branchName, String sha){
 
-@Getter
-@Builder
-public class Branch {
-    private String branchName;
-    private String sha;
 }
