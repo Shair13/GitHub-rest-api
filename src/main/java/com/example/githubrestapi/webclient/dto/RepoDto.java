@@ -1,14 +1,5 @@
 package com.example.githubrestapi.webclient.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+public record RepoDto(OwnerDto owner, String name, boolean fork, BranchDto[] branches) {
 
-@Getter
-@Setter
-public class RepoDto {
-
-    private OwnerDto owner;
-    private String name;
-    private boolean fork;
-    private BranchDto[] branches;
 }

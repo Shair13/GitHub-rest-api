@@ -2,13 +2,10 @@ package com.example.githubrestapi.service;
 
 import com.example.githubrestapi.model.Branch;
 import com.example.githubrestapi.model.Repo;
-import com.example.githubrestapi.webclient.dto.BranchDto;
 import com.example.githubrestapi.webclient.dto.RepoDto;
 import com.example.githubrestapi.webclient.gitclient.GitClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -21,18 +18,18 @@ public class GitService {
 
         return notForkedRepos(gitClient.getReposForUser(login)).stream()
                 .map(repoDto -> {
-                    List<Branch> branchesList = Arrays.stream(gitClient.getBranchesForRepo(repoDto.getOwner().getLogin(), repoDto.getName()))
-                            .map(branchDto -> new Branch(branchDto.getName(), branchDto.getCommit().getSha()))
+                    List<Branch> branchesList = gitClient.getBranchesForRepo(repoDto.owner().login(), repoDto.name()).stream()
+                            .map(branchDto -> new Branch(branchDto.name(), branchDto.commit().sha()))
                             .toList();
-                   return new Repo(repoDto.getName(), repoDto.getOwner().getLogin(), branchesList);
+                   return new Repo(repoDto.name(), repoDto.owner().login(), branchesList);
                 })
                 .toList();
     }
 
-    private List<RepoDto> notForkedRepos(RepoDto[] reposDto) {
+    private List<RepoDto> notForkedRepos(List<RepoDto> reposDto) {
 
-        return Arrays.stream(reposDto)
-                .filter(repoDto -> !repoDto.isFork())
+        return reposDto.stream()
+                .filter(repoDto -> !repoDto.fork())
                 .toList();
     }
 }

@@ -1,8 +1,5 @@
 package com.example.githubrestapi.webclient.dto;
 
-import lombok.Getter;
+public record CommitDto(String sha) {
 
-@Getter
-public class CommitDto {
-    private String sha;
 }
