@@ -19,29 +19,14 @@ public class GitService {
 
     public List<Repo> getUserRepositories(String login) {
 
-        List<RepoDto> reposDto = notForkedRepos(gitClient.getReposForUser(login));
-
-        List<Repo> repoList;
-
-        repoList = reposDto.stream()
-                .map(repoDto -> Repo.builder()
-                        .userName(repoDto.getOwner().getLogin())
-                        .repoName(repoDto.getName())
-                        .build())
+        return notForkedRepos(gitClient.getReposForUser(login)).stream()
+                .map(repoDto -> {
+                    List<Branch> branchesList = Arrays.stream(gitClient.getBranchesForRepo(repoDto.getOwner().getLogin(), repoDto.getName()))
+                            .map(branchDto -> new Branch(branchDto.getName(), branchDto.getCommit().getSha()))
+                            .toList();
+                   return new Repo(repoDto.getName(), repoDto.getOwner().getLogin(), branchesList);
+                })
                 .toList();
-
-        repoList.forEach(repo -> {
-            BranchDto[] branchesDto = gitClient.getBranchesForRepo(repo.getUserName(), repo.getRepoName());
-            List<Branch> branches = Arrays.stream(branchesDto)
-                    .map(branchDto -> Branch.builder()
-                            .branchName(branchDto.getName())
-                            .sha(branchDto.getCommit().getSha())
-                            .build())
-                    .toList();
-            repo.setBranches(branches);
-        });
-
-        return repoList;
     }
 
     private List<RepoDto> notForkedRepos(RepoDto[] reposDto) {

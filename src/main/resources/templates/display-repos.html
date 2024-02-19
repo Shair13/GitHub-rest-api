@@ -6,9 +6,9 @@
 </head>
 <body>
 <div th:each="repo : ${repos}">
-    <h2 th:text="${repo.getRepoName()}"></h2>
-    <h3 th:text="${repo.getUserName()}"></h3>
-    <p th:each="branch : ${repo.getBranches()}" th:text="${branch.getBranchName() + ' : ' + branch.getSha()}"></p>
+    <h2 th:text="${repo.repoName()}"></h2>
+    <h3 th:text="${repo.userName()}"></h3>
+    <p th:each="branch : ${repo.branches}" th:text="${branch.branchName() + ' : ' + branch.sha()}"></p>
     <br>
 </div>
 </body>
