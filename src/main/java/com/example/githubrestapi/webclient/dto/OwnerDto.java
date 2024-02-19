@@ -1,8 +1,5 @@
 package com.example.githubrestapi.webclient.dto;
 
-import lombok.Getter;
+public record OwnerDto(String login) {
 
-@Getter
-public class OwnerDto {
-    private String login;
 }

@@ -4,11 +4,15 @@ package com.example.githubrestapi.webclient.gitclient;
 import com.example.githubrestapi.exception.GitHubApiRemoteException;
 import com.example.githubrestapi.webclient.dto.BranchDto;
 import com.example.githubrestapi.webclient.dto.RepoDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Component
 public class GitClient {
@@ -17,7 +21,7 @@ public class GitClient {
 
     @Value("${github.api.token}")
     private String TOKEN;
-    private final RestTemplate restTemplate = new RestTemplate();
+    RestClient restClient = RestClient.create();
 
     public RepoDto[] getReposForUser(String user) {
         return fetchData("users/{user}/repos", RepoDto[].class, user);
@@ -27,13 +31,14 @@ public class GitClient {
         return fetchData("repos/{user}/{repo}/branches", BranchDto[].class, user, repo);
     }
 
-    private <T> T fetchData(String url, Class<T> responseType, Object... objects) {
+    private <T> T fetchData(String url, Class<T> responseType, Object... uriVariables) {
         try {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", TOKEN);
-            HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
-            ResponseEntity<T> response = restTemplate.exchange(GIT_API_URL + url, HttpMethod.GET, entity, responseType, objects);
-            return response.getBody();
+            return restClient.get()
+                    .uri(GIT_API_URL + url, uriVariables)
+                    .header("Authorization", TOKEN)
+                    .accept(APPLICATION_JSON)
+                    .retrieve()
+                    .body(responseType);
         } catch (HttpClientErrorException.NotFound e) {
             throw new GitHubApiRemoteException("No user found with this login");
         } catch (HttpClientErrorException.Forbidden e) {
