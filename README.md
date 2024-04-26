@@ -4,29 +4,62 @@
 
 This Java application (built using Java 17 and Spring Boot 3) utilizes the GitHub API to search for repositories and their branches based on the provided user login in the URL. The API response will contain a list of repositories belonging to the specified user along with their branches and the last SHA for each. Only repositories that are not forks will be included in the response.
 
-## Instructions
+# Run the application
 
-### 1. Clone Repository
+# Docker
 
-Clone this repository to your local machine.
+```
+docker run -p 8080:8080 ghcr.io/shair13/github-rest-api:v1
+```
 
-### 2. Clone Repository
+Application will run at 
 
-Set your GitHub token in the `github.api.token` field in the **application.properties** file.
+```
+localhost:8080/json/Shair13
+```
+for json format or
 
-![token](images/token.png)
+```
+localhost:8080/Shair13
+```
+for HTML format
 
-### 3. Run the Application
+# Clone
 
-Open the project in your preferred IDE (e.g., IntelliJ IDEA, Eclipse) and run the application.
+### Steps:
 
-### 4. Accessing the API
+1. **Clone the Repository:** Clone this repository to your local machine using the following command in your terminal:
 
-Once the application is running, you can access the API using the URLs specified below:
+   **HTTPS**
+    ```
+    git clone https://github.com/Shair13/GitHub-rest-api.git
+    ```
+   **SSH**
+   ```
+    git clone git@github.com:Shair13/GitHub-rest-api.git
+   ```
+   Optionally, to increase the number of possible requests after cloning the application, you can add your GitHub token to the `application.properties` file.
+
+   ![token](images/token.png)
+
+3. **Build the Application:** Navigate to the repository folder and use the Maven command to build the application:
+
+    ```bash
+    mvn package
+    ```
+
+4. **Run the Application:** After building the application, navigate to the `target` folder and run the application
+   using the following command:
+
+    ```bash
+    cd target
+    java -jar GitHub-rest-api-0.0.1-SNAPSHOT.jar
+    ```
+5. **Access the Application:** Once the application is running, you can access the API using the URLs specified below:
 
 ## The API is divided into 2 endpoints:
 
-### Endpoint 1: JSON Format Data
+#### Endpoint 1: JSON Format Data
 
 **URL**: `http://localhost:8080/json/{login}`
 
