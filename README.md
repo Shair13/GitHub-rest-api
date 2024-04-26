@@ -2,7 +2,7 @@
 
 ## Description
 
-This Java application (built using Java 21 and Spring Boot 3) utilizes the GitHub API to search for repositories and their branches based on the provided user login in the URL. The API response will contain a list of repositories belonging to the specified user along with their branches and the last SHA for each. Only repositories that are not forks will be included in the response.
+This Java application (built using Java 17 and Spring Boot 3) utilizes the GitHub API to search for repositories and their branches based on the provided user login in the URL. The API response will contain a list of repositories belonging to the specified user along with their branches and the last SHA for each. Only repositories that are not forks will be included in the response.
 
 ## Instructions
 
