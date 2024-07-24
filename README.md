@@ -15,12 +15,12 @@ docker run -p 8080:8080 ghcr.io/shair13/github-rest-api:v1
 Application will run at 
 
 ```
-localhost:8080/json/Shair13
+localhost:8080/json/<your github nick>
 ```
 for json format or
 
 ```
-localhost:8080/Shair13
+localhost:8080/<your github nick>
 ```
 for HTML format
 
